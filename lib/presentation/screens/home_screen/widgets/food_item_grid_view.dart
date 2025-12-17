@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/model/item_model.dart';
-import 'package:food_delivery_app/view/home_screen/widgets/food_tile.dart';
+import 'package:food_delivery_app/presentation/screens/home_screen/widgets/food_tile.dart';
 
 class FoodItemGridView extends StatelessWidget {
   final List<ItemModel> foodItem;
@@ -16,7 +16,7 @@ class FoodItemGridView extends StatelessWidget {
 
         // 🧮 Choose number of columns based on width
         int crossAxisCount = 2; // default for phones
-        double childAspectRatio = 0.75;
+        double childAspectRatio = 0.68;
         if (width > 900) {
           crossAxisCount = 5; // large desktop
           childAspectRatio = 0.75;

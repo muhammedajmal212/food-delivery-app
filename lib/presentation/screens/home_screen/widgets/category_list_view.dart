@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/model/category_model.dart';
-import 'package:food_delivery_app/view/home_screen/widgets/category_tile.dart';
+import 'package:food_delivery_app/presentation/screens/home_screen/widgets/category_tile.dart';
 
 class CategoryListView extends StatelessWidget {
   final List<CategoryModel> categories;
