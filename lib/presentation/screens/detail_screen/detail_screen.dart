@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_app/core/theme/app_text_styles.dart';
+import 'package:food_delivery_app/presentation/screens/detail_screen/widgets/add_icon.dart';
+import 'package:food_delivery_app/presentation/screens/detail_screen/widgets/arrow_back_button.dart';
+import 'package:food_delivery_app/presentation/screens/detail_screen/widgets/price_container.dart';
+import 'package:food_delivery_app/presentation/screens/detail_screen/widgets/remove_icon.dart';
+import 'package:food_delivery_app/presentation/screens/widgets/app_elevated_button.dart';
 
 class DetailScreen extends StatefulWidget {
   final String image;
@@ -28,63 +33,51 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   void inceament() {
-    setState(() {
-      quantity++;
-      total = quantity * amount;
-    });
+    if (quantity < 20) {
+      setState(() {
+        quantity++;
+        total = quantity * amount;
+      });
+    }
   }
 
   void decreament() {
-    setState(() {
-      quantity--;
-      total = quantity * amount;
-    });
+    if (quantity > 1) {
+      setState(() {
+        quantity--;
+        total = quantity * amount;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // Custom AppBar with working back button
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xffef2b39),
-              borderRadius: BorderRadius.circular(30),
-            ),
-            margin: const EdgeInsets.only(left: 10, top: 10),
-            child: const Icon(Icons.arrow_back, size: 30, color: Colors.white),
-          ),
+          child: ArrowBackButton(),
         ),
       ),
-
-      // Scrollable content to handle overflow on smaller screens
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Product image centered and responsive
             Center(
               child: Image.asset(
                 widget.image,
-                // "assets/images/pizza.png",
                 fit: BoxFit.contain,
                 height: MediaQuery.of(context).size.height / 3.5,
               ),
             ),
             const SizedBox(height: 16),
-
-            // Product title
             Text(widget.name, style: AppTextStyles.headlineLarge),
             const SizedBox(height: 8),
-
-            // Product price
-            Text(widget.price, style: AppTextStyles.titleLarge),
+            Text('₹ ${widget.price}', style: AppTextStyles.titleLarge),
             const SizedBox(height: 12),
             Text(
               "We’ve established that most cheeses will melt when baked atop pizza. "
@@ -97,20 +90,12 @@ class _DetailScreenState extends State<DetailScreen> {
             SizedBox(height: 15),
 
             Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 GestureDetector(
                   onTap: () {
-                    inceament();
+                    decreament();
                   },
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Color(0xffef2b39),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(Icons.add, size: 32, color: Colors.white),
-                  ),
+                  child: RemoveIcon(),
                 ),
                 SizedBox(width: 10),
 
@@ -118,35 +103,39 @@ class _DetailScreenState extends State<DetailScreen> {
                 SizedBox(width: 10),
                 GestureDetector(
                   onTap: () {
-                    decreament();
+                    inceament();
                   },
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Color(0xffef2b39),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Icon(Icons.remove, size: 32, color: Colors.white),
-                    ),
-                  ),
+                  child: AddIcon(),
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Container(
-              height: 70,
-              width: 120,
-              decoration: BoxDecoration(
-                color: Color(0xffef2b39),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: Text(
-                  total.toString(),
-                  style: AppTextStyles.titleLarge.copyWith(color: Colors.white),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                PriceContainer(
+                  label: Text(
+                    "₹ ${total.toStringAsFixed(1)}",
+                    style: AppTextStyles.titleLarge.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  height: 70,
+                  width: 170,
+                  color: Color(0xffef2b39),
                 ),
-              ),
+                SizedBox(width: 20),
+                AppElevatedButton(
+                  label: Text(
+                    "Order Now",
+                    style: AppTextStyles.titleLarge.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  height: 70,
+                  width: 180,
+                  color: Colors.black,
+                ),
+              ],
             ),
           ],
         ),

@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:food_delivery_app/view/home_screen/home_screen.dart';
-import 'package:food_delivery_app/view/order_screen/order_screen.dart';
-import 'package:food_delivery_app/view/profile/profile_screen.dart';
-import 'package:food_delivery_app/view/wallet_screen/wallet_screen.dart';
+import 'package:food_delivery_app/presentation/screens/home_screen/home_screen.dart';
+import 'package:food_delivery_app/presentation/screens/order_screen/order_screen.dart';
+import 'package:food_delivery_app/presentation/screens/profile/profile_screen.dart';
+import 'package:food_delivery_app/presentation/screens/wallet_screen/wallet_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -22,6 +25,8 @@ class _MainScreenState extends State<MainScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    log(user.toString());
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Color(0xffef2b39),
